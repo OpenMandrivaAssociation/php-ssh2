@@ -6,7 +6,7 @@
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
 Version:	0.10
-Release:	%mkrel 14
+Release:	%mkrel 15
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
@@ -14,8 +14,6 @@ Source0:	ssh2-%{version}.tar.bz2
 Patch0:		ssh2-0.4.1-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	libssh2-devel
-Provides:	php5-ssh2
-Obsoletes:	php5-ssh2
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
@@ -30,6 +28,15 @@ secure cryptographic transport.
 %patch0 -p0
 
 %build
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export FFLAGS="%{optflags}"
+
+%if %mdkversion >= 200710
+export CFLAGS="$CFLAGS -fstack-protector"
+export CXXFLAGS="$CXXFLAGS -fstack-protector"
+export FFLAGS="$FFLAGS -fstack-protector"
+%endif
 
 phpize
 %configure2_5x --with-libdir=%{_lib} \
@@ -58,5 +65,3 @@ EOF
 %defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
-
-
