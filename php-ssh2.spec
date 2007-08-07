@@ -1,17 +1,19 @@
 %define modname ssh2
-%define dirname %{modname}
 %define soname %{modname}.so
 %define inifile A36_%{modname}.ini
 
+%define snap 20060607
+
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
-Version:	0.10
-Release:	%mkrel 16
+Version:	0.11
+Release:	%mkrel 0.%{snap}.1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
-Source0:	ssh2-%{version}.tar.bz2
-Patch0:		ssh2-0.4.1-lib64.diff
+Source0:	ssh2-%{version}-%{snap}.tar.bz2
+Patch0:		php-ssh2-lib64.diff
+Patch1:		php-ssh2-libssh2-0.16_fix.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	libssh2-devel
 Epoch:		1
@@ -24,11 +26,11 @@ secure cryptographic transport.
 
 %prep
 
-%setup -q -n ssh2-%{version}
+%setup -q -n ssh2
 %patch0 -p0
+%patch1 -p0
 
 %build
-%serverbuild
 
 phpize
 %configure2_5x --with-libdir=%{_lib} \
