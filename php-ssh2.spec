@@ -7,7 +7,7 @@
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
 Version:	0.11
-Release:	%mkrel 0.%{snap}.1
+Release:	%mkrel 0.%{snap}.2
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
@@ -31,6 +31,7 @@ secure cryptographic transport.
 %patch1 -p0
 
 %build
+%serverbuild
 
 phpize
 %configure2_5x --with-libdir=%{_lib} \
