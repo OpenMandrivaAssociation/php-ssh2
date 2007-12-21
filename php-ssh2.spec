@@ -17,6 +17,7 @@ Patch1:		php-ssh2-libssh2-0.16_fix.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	libssh2-devel
 Epoch:		1
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Provides bindings to the libssh2 library which provide access to resources
