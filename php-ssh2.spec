@@ -2,19 +2,21 @@
 %define soname %{modname}.so
 %define inifile A36_%{modname}.ini
 
-%define snap 20071019
+%define snap 20080515
 
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
-Version:	0.11
-Release:	%mkrel 0.%{snap}.3
+Version:	0.11.0
+Release:	%mkrel 0.%{snap}.1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
 Source0:	ssh2-%{version}-%{snap}.tar.gz
+Source1:	libssh2-0.14.tar.gz
 Patch0:		php-ssh2-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
-BuildRequires:	libssh2-devel
+BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -25,26 +27,36 @@ secure cryptographic transport.
 
 %prep
 
-%setup -q -n ssh2
+%setup -q -n ssh2 -a1
 %patch0 -p0
 
 %build
 %serverbuild
 
-phpize
-%configure2_5x --with-libdir=%{_lib} \
-    --with-%{modname}=shared,%{_prefix}
+#phpize
+#configure2_5x --with-libdir=%{_lib} \
+#    --with-%{modname}=shared,%{_prefix}
+#
+#make
+#mv modules/*.so .
 
-%make
-mv modules/*.so .
+pushd libssh2-*
+%configure2_5x \
+    --with-openssl=%{_prefix} \
+    --with-libz=%{_prefix}
+#make CFLAGS="%{optflags} -fPIC"
+popd
+
+/usr/src/php-devel/buildext ssh2 "ssh2.c ssh2_fopen_wrappers.c ssh2_sftp.c libssh2-0.14/src/*.c" \
+    "-DCOMPILE_DL_SSH2 -DHAVE_SSH2LIB -Ilibssh2-0.14/include -Ilibssh2-0.14/src -lcrypto -lm"
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 install -d %{buildroot}%{_libdir}/php/extensions
 install -d %{buildroot}%{_sysconfdir}/php.d
 
-install -m755 %{soname} %{buildroot}%{_libdir}/php/extensions/
+install -m0755 %{soname} %{buildroot}%{_libdir}/php/extensions/
 
 cat > %{buildroot}%{_sysconfdir}/php.d/%{inifile} << EOF
 extension = %{soname}
@@ -63,10 +75,10 @@ if [ "$1" = "0" ]; then
 fi
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-[ "../package.xml" != "/" ] && rm -f ../package.xml
+rm -rf %{buildroot}
 
 %files 
 %defattr(-,root,root)
+%doc package*.xml
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
