@@ -4,12 +4,13 @@
 
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
-Version:	0.11.0
-Release:	%mkrel 3
+Version:	0.11.1
+Release:	%mkrel 0.20090208.1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
-Source0:	http://pecl.php.net/get/ssh2-%{version}.tgz
+#Source0:	http://pecl.php.net/get/ssh2-%{version}.tgz
+Source0:	ssh2.tar.gz
 Patch0:		php-ssh2-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	openssl-devel
@@ -25,8 +26,8 @@ secure cryptographic transport.
 
 %prep
 
-%setup -q -n ssh2-%{version}
-[ "../package*.xml" != "/" ] && mv ../package*.xml .
+%setup -q -n ssh2
+#[ "../package*.xml" != "/" ] && mv ../package*.xml .
 
 %patch0 -p0
 
