@@ -26,7 +26,7 @@ secure cryptographic transport.
 
 %prep
 
-%setup -q
+%setup -q -n ssh2-%{version}
 [ "../package*.xml" != "/" ] && mv ../package*.xml .
 
 %patch0 -p0
