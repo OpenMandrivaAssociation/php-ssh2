@@ -6,7 +6,7 @@ Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
 Version:	0.11.3
 %define subrel 1
-Release:	%mkrel 0
+Release:	1
 Group:		Development/PHP
 License:	PHP License
 URL:		http://pecl.php.net/package/ssh2
@@ -18,7 +18,6 @@ BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig(libssh2) >= 0.15
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Provides bindings to the libssh2 library which provide access to resources
