@@ -16,7 +16,7 @@ Patch0:		php-ssh2-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
-BuildRequires:	libssh2-devel >= 0.15
+BuildRequires:	pkgconfig(libssh2) >= 0.15
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
