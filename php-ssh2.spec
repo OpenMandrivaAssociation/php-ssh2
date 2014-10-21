@@ -5,12 +5,12 @@
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
 Epoch:		1
-Version:	0.11.3
-Release:	8
+Version:	0.12
+Release:	1
 Group:		Development/PHP
 License:	PHP License
 Url:		http://pecl.php.net/package/ssh2
-Source0:	http://pecl.php.net/get/ssh2-%{version}.tgz
+Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 # svn checkout http://svn.php.net/repository/pecl/ssh2/trunk ssh2
 Patch0:		php-ssh2-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
@@ -67,4 +67,3 @@ fi
 %doc package*.xml
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
-
