@@ -1,22 +1,23 @@
-%define modname	ssh2
-%define soname	%{modname}.so
-%define inifile	A36_%{modname}.ini
+%define modname ssh2
+%define soname %{modname}.so
+%define inifile A36_%{modname}.ini
 
 Summary:	PHP bindings for the libssh2 library
 Name:		php-%{modname}
-Epoch:		1
-Version:	0.11.3
-Release:	8
+Version:	0.12
+%define subrel 1
+Release:	1
 Group:		Development/PHP
 License:	PHP License
-Url:		http://pecl.php.net/package/ssh2
-Source0:	http://pecl.php.net/get/ssh2-%{version}.tgz
+URL:		http://pecl.php.net/package/ssh2
+Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 # svn checkout http://svn.php.net/repository/pecl/ssh2/trunk ssh2
 Patch0:		php-ssh2-lib64.diff
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig(libssh2) >= 0.15
+Epoch:		1
 
 %description
 Provides bindings to the libssh2 library which provide access to resources
@@ -34,14 +35,14 @@ secure cryptographic transport.
 %serverbuild
 
 phpize
-%configure2_5x \
-	--with-libdir=%{_lib} \
-	--with-%{modname}=shared,%{_prefix}
+%configure2_5x --with-libdir=%{_lib} \
+    --with-%{modname}=shared,%{_prefix}
 
 make
 mv modules/*.so .
 
 %install
+
 install -d %{buildroot}%{_libdir}/php/extensions
 install -d %{buildroot}%{_sysconfdir}/php.d
 
@@ -63,8 +64,9 @@ if [ "$1" = "0" ]; then
     fi
 fi
 
+%clean
+
 %files 
 %doc package*.xml
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/php.d/%{inifile}
 %attr(0755,root,root) %{_libdir}/php/extensions/%{soname}
-

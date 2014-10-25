@@ -1,2 +1,4 @@
+removed_sources:
+  ssh2-0.11.3.tgz: 8d1e4b59e1fff368c5a3dde04fc93c5361203077
 sources:
-  "ssh2-0.11.3.tgz": 8d1e4b59e1fff368c5a3dde04fc93c5361203077
+  ssh2-0.12.tgz: b86a25bdd3f3558bbcaaa6d876309fbbb5ae134d
