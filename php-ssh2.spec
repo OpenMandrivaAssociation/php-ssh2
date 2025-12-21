@@ -13,6 +13,11 @@ URL:		https://pecl.php.net/package/ssh2
 Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
 # svn checkout http://svn.php.net/repository/pecl/ssh2/trunk ssh2
 Patch0:		php-ssh2-lib64.diff
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	php-devel >= 3:5.2.0
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
